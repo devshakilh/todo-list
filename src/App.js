@@ -39,13 +39,24 @@ const App = () => {
     setTasks(tasks.filter((task) => task.id !== taskId));
   };
 
+  const editTask = (taskId, updatedTitle) => {
+    setTasks(tasks.map((task) => (task.id === taskId ? { ...task, title: updatedTitle } : task)));
+  };
+
+  const totalTasks = tasks.length;
+  const completedTasks = tasks.filter((task) => task.completed).length;
 
 
   return (
     <div style={containerStyle}>
     <h1 style={headerStyle}>Todo List App</h1>
     <AddTaskForm style={home} onAdd={addTask} />
-    <TaskList tasks={tasks} onToggle={toggleTask} style={home} onDelete={deleteTask} />
+    <TaskList tasks={tasks} onToggle={toggleTask} style={home} onDelete={deleteTask} onEdit={editTask} />
+  
+    <div className="counters">
+        <p>Total Tasks: {totalTasks}</p>
+        <p>Completed Tasks: {completedTasks}</p>
+      </div>
   </div>
   );
 };
